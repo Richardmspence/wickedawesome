@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <title>geolatlon</title>
+</head>
+<body>
+    var lat = '';
+    var lng = '';
+    var address = {zipcode} or {city and state};
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+         lat = results[0].geometry.location.lat();
+         lng = results[0].geometry.location.lng();
+        });
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+    alert('Latitude: ' + lat + ' Logitude: ' + lng);
+
+</body>
+</html>
+
+
+
+
+

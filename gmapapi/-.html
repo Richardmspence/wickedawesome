@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<!--   <style>
+    #map {
+      height: 400px;
+      width: 100%;
+    }
+  </style> -->
+
+</head>
+
+<body>
+ <!--  <h3>My Google Maps Demo</h3>
+
+  <p>Make a form that asks for the user's zip code.</p>
+
+  <div id="control">
+    <h2>Find Local Runners</h2>
+    <p>We'll help you locate your closest runner. Simply choose an option below to begin...</p> -->
+    <!-- <form id="chooseZip" action="#"> -->
+<!--       <div class="user-form-section">
+        <label>First Name:  </label>
+        <input type="text" id="first-name-input" name="firstname">
+      </div>
+
+      <div class="user-form-section">
+        <label>Last Name: </label>
+        <input type="text" id="last-name-input" name="firstname">
+      </div>
+
+      <div class="user-form-section">
+        <label>Email:  </label>
+        <input type="text" id="user-name" name="useremail">
+      </div>
+
+      <div class="user-form-section">
+        <label>Gender  </label>
+        <div class="user-form-section-input">
+          <input type="radio" name="gender" value="male"> Male
+        </div>
+        <div class="user-form-section-input">
+          <input type="radio" name="gender" value="female"> Female
+        </div>
+        <div class="user-form-section-input">
+          <input type="radio" name="gender" value="other"> Alien -->
+    <form id="chooseZip" action="#">  
+      <button class="learnButton">Use current location</button>
+      <input type="hidden" name="currentLocation" id="currentLocation"/>
+      
+  <!--           <button type="button" id="searchZip" class="learnButton">Search by Zip Code</button> -->
+  <!--     <div class="clear"></div> -->
+      <div class="zipSearch">
+        <input id="textZip" type="text" name="zip" placeholder="enter your zip code" autofocus>
+      </div>
+      <button type="submit" class="learnButton">Search</button>
+      <div class="clear"></div>
+    </form>
+
+
+    <style>
+    #map {
+      height: 400px;
+      width: 100%;
+    }
+    </style>
+  <div id="map"></div>
+
+
+
+  <script>
+    var zipForm = document.getElementById('chooseZip');
+    // declare lat and lng variables for use later
+    var zipLat;
+    var zipLng;
+
+    zipForm.addEventListener('submit',function(event){
+        event.preventDefault();
+        // Code to determine type of submission
+        var currentLocation = document.getElementById('currentLocation');
+        var textZip = document.getElementById('textZip');
+        if (currentLocation.value) {
+            // The user has submitted their current location
+            
+        } else if (textZip.value) {
+            // create endpoint for google maps geocoder API using address query string
+            var googleMapsZipcodeEnpoint = 'http://maps.googleapis.com/maps/api/geocode/json?address=';
+            // add user inputted zip code to the google geocode string
+            var endpoint = googleMapsZipcodeEnpoint + textZip.value;
+            // use jQuery AJAX .get() function to make AJAX call to google geocode API
+            $.get(endpoint, function(data) {
+              // set zipLat and zipLng to location results from API call
+              zipLat = data.results[0].geometry.location.lat;
+              zipLng = data.results[0].geometry.location.lng;
+              // render the map with zip code location
+              renderMap(data.results[0].geometry.location);
+            });
+            // The user has submitted a zip
+            
+        } else {
+            // The user has not provided any location information
+            
+        }
+    });
+  </script>
+  <!-- add jQuery CDN for use in script above -->
+  <script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCR3fKBOyQ4xA9ZZGTvzEP3r1IG7NKR4yY&libraries=places&callback=initMap">
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript" src="gnew.js">
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+<link rel="stylesheet" type="text/css" href="assets/css/flavor.css">
+
+
+
+
+	<title>running app</title>
+
+	
+</head>
+<body>	
+<div class="jumbotron">
+  <h1>Wicked Runners!</h1> 
+  <h4>Greetings! Fill out the form and find a gym or running buddy nearby. </h4>
+</div>
+
+
+	<div id="test"> </div>
+
+
+<div class="row">
+  
+
+  <div class="col-md-4"> 
+
+
+  	<form id="wa-form">
+  		<div class="user-form-section">
+  			<label>First Name:  </label>
+        <br>
+  			<input type="text" id="first-name-input" name="firstname"> 
+  		</div>
+
+  		<div class="user-form-section">
+  			<label>Last Name: </label>
+        <br>
+  			<input type="text" id="last-name-input" name="firstname"> 
+  		</div>
+
+  		<div class="user-form-section">
+  			<label>Email:  </label>
+        <br>
+  			<input type="text" id="user-name" name="useremail"> 
+  		</div>
+
+  		<div class="user-form-section">
+  			<label>Zip Code:  </label>
+        <br>
+  			<input type="text" id="zip-code" name="zipcode"> <br> 
+  		</div>
+
+  		<div class="user-form-section">
+  			<label>Gender  </label>
+  			<div class="user-form-section-input">
+  				<input type="radio" id="gender-male" name="gender" value="male"> Male 
+  			</div>
+  			<div class="user-form-section-input">	
+  				<input type="radio" id="gender-female" name="gender" value="female"> Female 
+  			</div>
+  			<div class="user-form-section-input">
+  				<input type="radio" id="gender-alien" name="gender" value="other"> Alien
+  			</div>
+  		</div>
+
+  		<div class="user-form-section-input">
+  			<button class="btn btn-primary">Send</button>
+  		</div>	
+  	</form>
+  </div>
+
+
+<div class="col-md-4">
+
+
+	<div id="weatherApi">
+		<div class="city"></div>
+  <div class="wind"></div>
+  <div class="humidity"></div>
+  <div class="temp"></div>
+  <div class="clouds"></div>
+  <div class="description"></div>
+  <div class="rain"></div>
+  <div class="snow"></div>
+  <div class="icon"></div>
+  <input id="zip" placeholder="Enter your zip code" type="text">
+  <button id="submit-btn" class="btn btn-primary">Submit</button>
+	</div>
+
+  </div>
+  
+  <div class="col-md-4">
+	<div id="gmapapi">
+
+    <h3>Enter Zip and Find <br> the Nearest Gym</h3>
+		 <form id="chooseZip" action="#">  
+      <button id="submit-btn" class="btn btn-primary">Use current location</button>
+      <input type="hidden" name="currentLocation" id="currentLocation"/>
+      
+      <div class="zipSearch">
+        <input id="textZip" type="text" name="zip" placeholder="enter your zip code" autofocus>
+      </div>
+      <button id="submit-btn" class="btn btn-primary">Submit</button>
+      <div class="clear"></div>
+    </form>
+  </div>
+  </div>
+  <style>
+  #map {
+    height: 400px;
+    width: 100%;
+  }
+  </style>
+
+	<div id="map"></div>	
+
+   <script>
+  var zipForm = document.getElementById('chooseZip');
+  // declare lat and lng variables for use later
+  var zipLat;
+  var zipLng;
+
+  zipForm.addEventListener('submit',function(event){
+      event.preventDefault();
+      // Code to determine type of submission
+      var currentLocation = document.getElementById('currentLocation');
+      var textZip = document.getElementById('textZip');
+      if (currentLocation.value) {
+          // The user has submitted their current location
+          
+      } else if (textZip.value) {
+          // create endpoint for google maps geocoder API using address query string
+          var googleMapsZipcodeEnpoint = 'http://maps.googleapis.com/maps/api/geocode/json?address=';
+          // add user inputted zip code to the google geocode string
+          var endpoint = googleMapsZipcodeEnpoint + textZip.value;
+          // use jQuery AJAX .get() function to make AJAX call to google geocode API
+          $.get(endpoint, function(data) {
+            // set zipLat and zipLng to location results from API call
+            zipLat = data.results[0].geometry.location.lat;
+            zipLng = data.results[0].geometry.location.lng;
+            // render the map with zip code location
+            renderMap(data.results[0].geometry.location);
+          });
+          // The user has submitted a zip
+          
+      } else {
+          // The user has not provided any location information
+          
+      }
+  });
+  </script>
+
+
+
+	<script src="https://code.jquery.com/jquery-2.2.3.js" integrity="sha256-laXWtGydpwqJ8JA+X9x2miwmaiKhn8tVmOVEigRNtP4=" crossorigin="anonymous"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCR3fKBOyQ4xA9ZZGTvzEP3r1IG7NKR4yY&libraries=places&callback=initMap">
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+
+<script src="./assets/javascript/waForm.js"></script>
+
+<script src="./assets/javascript/weather.js"></script>
+
+<script src="./assets/javascript/new.js"></script>
+
+<!-- <script src="./assets/css/flavor.css"></script> -->
+
+<!-- <script src="./assets/css/flavor.css"></script> -->
+ 
+
+	
+</body>
+</html>
